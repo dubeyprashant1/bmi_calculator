@@ -1,6 +1,10 @@
 import tkinter as tk
 from tkinter import *
 from tkinter import messagebox
+import os
+import time
+from PIL import Image, ImageTk
+from tkinter import messagebox
 import time
 
 #define all necessary functions
@@ -18,8 +22,12 @@ def result():
     try:
         weight=float(m.get())
         height=float(h.get())
-        if weight<=0 or height<=0:
-            messagebox.showwarning("Invalid Input", "Weight and height must be positive values.")
+        if weight<=0 and height<=0:
+            messagebox.showwarning("Invalid Input", "Weight and height must have positive values.")
+        elif weight<=0 and height>=0:
+            messagebox.showwarning("Invalid Input", "Weight must have positive values.")
+        elif weight>=0 and height<=0:
+            messagebox.showwarning("Invalid Input", "Height must have positive values.")
         else:
             bmi_calculation=round((weight/(height**2)),2)
             if(bmi_calculation<18.5):
@@ -58,21 +66,28 @@ current_index=0
 #make window
 win=tk.Tk()
 win.title("BMI Calculator")
-win.geometry("800x800")
-win.configure(background="black")
+win.geometry("800x600")
 win.resizable(False,False)
 
+#setting background image
+original_bmibg_image= Image.open("bmi_bg.webp")
+resized_bmibg_image= original_bmibg_image.resize((800,600))
+# Convert the resized image to PhotoImage format
+bmibg_img= ImageTk.PhotoImage(resized_bmibg_image)
+bmibg_widget= tk.Label(master=win,image=bmibg_img)
+bmibg_widget.image=bmibg_img # This line is important to prevent the image from being garbage collected
+bmibg_widget.place(x=0,y=0)
 
 home_button=tk.Button(master=win, text="HOME", font="verdana 10 bold", bg="white", fg="black", border="3", command=goto_home).place(anchor=NW)
 
-title_label=tk.Label(master=win, text="BMI Calculator", font="verdana 30 bold", bg="black", fg="green", highlightbackground="green", highlightthickness=3).pack(pady=50)
+title_label=tk.Label(master=win, text="BMI Calculator", font="verdana 30 bold", bg="black", fg="green", highlightbackground="green", highlightthickness=3).pack(pady=20)
 heading_label=tk.Label(master=win, text="", font="verdana 20", bg="black", fg="white")
 sentence ="Get Your Body Mass Index"
 heading_label.pack(pady=10)
 
 frame1=tk.Frame(master=win,highlightbackground="yellow", highlightthickness=5)
 frame1.configure(background="white")
-frame1.pack(pady=50)
+frame1.pack(pady=20)
 
 #take weight and height from the user
 mass_label=tk.Label(master=frame1,text="Enter your Weight in Kilograms : ", font="verdana 14 bold").grid(row=0,column=0,padx=20,pady=20)
