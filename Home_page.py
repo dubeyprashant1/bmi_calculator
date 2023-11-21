@@ -43,15 +43,20 @@ current_index=0
 win = tk.Tk()
 win.title("Fun Zone")
 win.geometry("800x800")
-win.configure(background="black",border=2)
 win.resizable(False,False)
+
+#setting background image
+original_home_image= Image.open("background_img.png")
+resized_home_image= original_home_image.resize((800,800))
+# Convert the resized image to PhotoImage format
+home_img= ImageTk.PhotoImage(resized_home_image)
+background_widget= tk.Label(master=win,image=home_img)
+background_widget.image=home_img # This line is important to prevent the image from being garbage collected
+background_widget.grid(row=0,column=0)
 
 welcome_label = tk.Label(master=win, text="", fg="white", bg="black", font="verdana 26 bold")
 sentence ="HEY!!, Welcome into  the  Fun  Zone"
-welcome_label.pack(pady=30)
-frame = tk.Frame(master=win,highlightbackground="white", highlightthickness=5, background="pink")
-frame.pack(pady=30)
-
+welcome_label.place(x=50,y=30)
 
 # Open and resize all the images using PIL
 original_bmi_image = Image.open("bmi_img.png")
@@ -63,30 +68,29 @@ resized_calculator_image = original_calculator_image.resize((150,150))
 original_textUtils_image = Image.open("text_utils.png")
 resized_textUtils_image = original_textUtils_image.resize((150,150))
 
-# Convert the resized image to PhotoImage format
 bmi_img = ImageTk.PhotoImage(resized_bmi_image)
-bmi = tk.Button(master=frame, image=bmi_img, bg="black", fg="white", width="150", height="150",border="3", command=BMI)
+bmi = tk.Button(master=win, image=bmi_img, bg="black", fg="white", width="150", height="150",border="3", command=BMI)
 bmi.image = bmi_img  # This line is important to prevent the image from being garbage collected
-bmi_label=tk.Button(master=frame, text="BMI Calculator", border=3, font="verdana 10 bold", command=BMI).place(x=120,y=220)
-bmi.grid(row=0, column=0, pady=50, padx=100)
+bmi_label=tk.Button(master=win, text="BMI Calculator", border=3, font="verdana 10 bold", command=BMI).place(x=120,y=320)
+bmi.place(x=100,y=150)
 
 convertor_img=ImageTk.PhotoImage(resized_convertor_image)
-convertor = tk.Button(master=frame,image=convertor_img, bg="black", fg="white", width="150", height="150",border="3", command=unit_convertor)
+convertor = tk.Button(master=win,image=convertor_img, bg="black", fg="white", width="150", height="150",border="3", command=unit_convertor)
 convertor.image = bmi_img  # This line is important to prevent the image from being garbage collected
-convertor_label=tk.Button(master=frame, text="Unit Convertor", border=3, font="verdana 10 bold", command=unit_convertor).place(x=480,y=220)
-convertor.grid(row=0, column=1, pady=2, padx=100)
+convertor_label=tk.Button(master=win, text="Unit Convertor", border=3, font="verdana 10 bold", command=unit_convertor).place(x=520,y=320)
+convertor.place(x=500,y=150)
 
 calculator_img=ImageTk.PhotoImage(resized_calculator_image)
-basic_calculator = tk.Button(master=frame, image=calculator_img, bg="black", fg="white", width="150", height="150",border="3", command=calculator)
+basic_calculator = tk.Button(master=win, image=calculator_img, bg="black", fg="white", width="150", height="150",border="3", command=calculator)
 basic_calculator.image = bmi_img  # This line is important to prevent the image from being garbage collected
-calculator_label=tk.Button(master=frame, text="Basic Calculator", border=3, font="verdana 10 bold", command=calculator).place(x=120,y=480)
-basic_calculator.grid(row=2, column=0, pady=50)
+calculator_label=tk.Button(master=win, text="Basic Calculator", border=3, font="verdana 10 bold", command=calculator).place(x=115,y=620)
+basic_calculator.place(x=100,y=450)
 
 textUtils_img=ImageTk.PhotoImage(resized_textUtils_image)
-text_utils = tk.Button(master=frame, image=textUtils_img, bg="black", fg="white", width="150", height="150",border="3", command=playWithText)
+text_utils = tk.Button(master=win, image=textUtils_img, bg="black", fg="white", width="150", height="150",border="3", command=playWithText)
 text_utils.image = bmi_img  # This line is important to prevent the image from being garbage collected
-textUtils_label=tk.Button(master=frame, text="Text Utils", border=3, font="verdana 10 bold", command=playWithText).place(x=500,y=480)
-text_utils.grid(row=2, column=1, pady=2)
+textUtils_label=tk.Button(master=win, text="Text Utils", border=3, font="verdana 10 bold", command=playWithText).place(x=540,y=620)
+text_utils.place(x=500,y=450)
 update_label()
 
 # run event loop
