@@ -1,2 +1,2 @@
 # bmi_calculator
-design a GUI interface for Body Mass Index calculation
+Design a GUI interafce for navigating to different windows consisting BMI Calculator, Unit Convertor, Simple Calculator and Text Utils
